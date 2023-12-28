@@ -85,7 +85,7 @@ func (us *UserService) LoginUser(email, password string) (*models.User, string, 
 		return nil, "", fmt.Errorf("password does not match")
 	}
 
-	token, err := utils.GenerateToken(user)
+	token, err := utils.GenerateToken(user,false,nil)
 	if err != nil {
 		return nil, "", fmt.Errorf("error generating token: %w", err)
 	}

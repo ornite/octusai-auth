@@ -59,6 +59,24 @@ func (s *server) Login(ctx context.Context, in *auth.LoginRequest) (*auth.LoginR
     return &auth.LoginResponse{Token: token}, nil
 }
 
+func (s *server) GetSecretKey(ctx context.Context, in *auth.SecretKeyRequest) (*auth.SecretKeyResponse, error) {
+	userID := in.UserId
+	expDuration := in.GetExpDuration()
+	isExp := in.GetIsExp()
+	expTime := float64(expDuration)
+
+	user := models.User{
+		ID: userID,
+	}
+
+	token, err := utils.GenerateToken(user,isExp,&expTime)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, err.Error())
+	}
+	
+    return &auth.SecretKeyResponse{Secretkey: token}, nil
+}
+
 func main() {
 	// Load env file
 	if err := env.Load(".env"); err != nil {

@@ -4,8 +4,9 @@ option go_package = ".";
 package auth;
 
 service AuthService {
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse){}
+  rpc Login(LoginRequest) returns (LoginResponse){}
+  rpc GetSecretKey(SecretKeyRequest) returns (SecretKeyResponse){}
 }
 
 message RegisterRequest {
@@ -25,4 +26,14 @@ message LoginRequest {
 
 message LoginResponse {
   string token = 1;
+}
+
+message SecretKeyRequest {
+  string userId = 1;
+  bool isExp = 2;
+  float expDuration = 3;
+}
+
+message SecretKeyResponse {
+  string secretkey = 1;
 }
